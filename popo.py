@@ -3,17 +3,28 @@ def leer(archivo:str) ->list :
     x = open(archivo,"r")
     lista = x.readlines()
     rresultado = list()
-    simbolos = [";",".","{","}","(",")","[","]","+","++",'"',"=","<","-"," "]
+    simbolos = [";",".","{","}","(",")","[","]","+","++","=","<","-"]
+    numeros = []
     for j in lista:
         keeplinea = ""
+        cintaodr = 1
         for m in j:
-            if m == " ":
+            if m == " " and cintaodr < 2:
                 rresultado.append(keeplinea)
                 keeplinea = ""
-            elif m in simbolos:
+            elif m in simbolos :
                 rresultado.append(keeplinea)
                 rresultado.append(m)
                 keeplinea = ""
+            elif m == '"':
+                if cintaodr < 2:
+                    rresultado.append(m)
+                    rresultado.append("constante")
+                    cintaodr += 1
+                else:
+                    rresultado.append(m)
+                    keeplinea = ""
+
             else:
                 keeplinea += m
     return rresultado
